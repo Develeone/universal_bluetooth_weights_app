@@ -2,7 +2,7 @@
 
 var Parser = require("binary-parser").Parser;
 var noble = require('noble');
-var bodymetrics = require('lib/bodymetrics');
+var bodymetrics = require('./lib/bodymetrics');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 
@@ -161,4 +161,22 @@ function display(data) {
     console.log(new Date(data.date * 1000), data.weight / 100 + "kg");
 
     console.log(data);
+
+    if (data.resistance) {
+
+        let weight = data.weight / 100;
+        let resistance = data.resistance;
+
+        let metric = bodymetrics.constructor(1, 23, 182);
+
+        console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
+        console.log("BMI: " + metric.getBMI(weight));
+        console.log("Muscle: " + metric.getMuscle(weight, resistance) + "%");
+        console.log("Water: " + metric.getWater(weight, resistance));
+        console.log("BoneMass: " + metric.getBoneMass(weight, resistance));
+        console.log("VisceralFat: " + metric.getVisceralFat(weight));
+        console.log("Fat (%): " + metric.getBodyFat(weight, resistance));
+
+        console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
+    }
 }
