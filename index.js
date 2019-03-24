@@ -1,13 +1,18 @@
-﻿console.log("Start");
+﻿if (debug)
+    console.log("Start");
 
 var Parser = require("binary-parser").Parser;
 var noble = require('noble');
 var bodymetrics = require('./lib/bodymetrics');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
+var isResultsGot = false;
+
+var debug = false;
 
 noble.on('stateChange', function (state) {
-    console.log('Bluetooth', state);
+    if (debug)
+        console.log('Bluetooth', state);
     noble.startScanning();
 });
 
@@ -15,32 +20,39 @@ noble.on('discover', function (peripheral) {
     var advertisement = peripheral.advertisement;
     var localName = advertisement.localName;
 
-    console.log("Bluetooth peripheral found: " + localName);
+    if (debug)
+        console.log("Bluetooth peripheral found: " + localName);
 
     if (localName === target_controller_name) {
-        console.log("Target peripheral found: " + localName);
+        if (debug)
+            console.log("Target peripheral found: " + localName);
         Connect(peripheral);
     }
 });
 
 //noble.on('scanStop', function () {
 function Connect (device) {
-    console.log("Connecting");
+    console.log("Производится подключение к весам YUNMAI\n");
 
     device.connect(function (error) {
-        console.log("Error: ", error);
+        if (debug)
+            console.log("Error: ", error);
 
         discoverServices(device)
         .then(function (services) {
             if (services.length > 0)
                 for (var service in services) {
-                    console.log(services[service]);
+
+                    if (debug)
+                        console.log(services[service]);
 
                     discoverCharacteristics(services[service])
                         .then(function (characteristics) {
                             for (var characteristic in characteristics) {
                                 characteristics[characteristic].on('data', function (data, isNotification) {
-                                    console.log(data);
+                                    if (debug)
+                                        console.log(data);
+
                                     handleWeighting(data);
 
                                     return;
@@ -58,7 +70,8 @@ function Connect (device) {
                                     if (error)
                                         console.log(error);
 
-                                    console.log("\n\n\nSubscribed!\n\n\n");
+                                    if (debug)
+                                        console.log("\n\n\nSubscribed!\n\n\n");
                                 });
                             }
                         });
@@ -146,37 +159,115 @@ const parseWeightingCompleted = function (buffer) {
 };
 
 function display(data) {
-    if (data.historicalInfo === 1)
-        console.log('Historical');
+    // if (data.historicalInfo === 1)
+    //     console.log('Historical');
+    //
+    // if (data.userId)
+    //     console.log('User: '+ data.userId);
+    //
+    // if (data.resistance)
+    //     console.log('Resistance: ' + data.resistance);
+    //
+    // if (data.fatPercentage)
+    //     console.log('Fat: ' + data.fatPercentage);
 
-    if (data.userId)
-        console.log('User: '+ data.userId);
+    //console.log(new Date(data.date * 1000), data.weight / 100 + "kg");
 
-    if (data.resistance)
-        console.log('Resistance: ' + data.resistance);
-
-    if (data.fatPercentage)
-        console.log('Fat: ' + data.fatPercentage);
-
-    console.log(new Date(data.date * 1000), data.weight / 100 + "kg");
-
-    console.log(data);
+    //console.log(data);
 
     if (data.resistance) {
+
+        if (isResultsGot)
+            return;
+
+        console.log("\n\nПроизведен биоимпедансный анализ");
 
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
         let metric = bodymetrics.constructor(1, 23, 182);
 
-        console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
-        console.log("BMI: " + metric.getBMI(weight));
-        console.log("Muscle: " + metric.getMuscle(weight, resistance) + "%");
-        console.log("Water: " + metric.getWater(weight, resistance));
-        console.log("BoneMass: " + metric.getBoneMass(weight, resistance));
-        console.log("VisceralFat: " + metric.getVisceralFat(weight));
-        console.log("Fat (%): " + metric.getBodyFat(weight, resistance));
+        console.log("Вес: " + data.weight / 100 + "кг");
+        //console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
+        console.log("ИМТ: " + metric.getBMI(weight).toFixed(2));
+        console.log("Мышцы: " + metric.getMuscle(weight, resistance).toFixed(2) + "%");
+        console.log("Вода: " + metric.getWater(weight, resistance).toFixed(2) + "%");
+        console.log("Кости: " + metric.getBonePercentage(weight, resistance).toFixed(2) + "%");
+        console.log("Вн. жир: " + metric.getVisceralFat(weight));
+        console.log("Жир: " + metric.getBodyFat(weight, resistance).toFixed(2) + "%\n");
 
-        console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
+        //console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
+
+        isResultsGot = true;
+    } else {
+        process.stdout.cursorTo(0);
+        process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
+        SendToAllConnections((data.weight / 100));
+        isResultsGot = false;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+var WebSocketServer = require('websocket').server;
+var http = require('http');
+var connections = [];
+
+var server = http.createServer(function(request, response) {
+    // process HTTP request. Since we're writing just WebSockets
+    // server we don't have to implement anything.
+});
+server.listen(1337, function() { });
+
+// create the server
+wsServer = new WebSocketServer({
+    httpServer: server
+});
+
+// WebSocket server
+wsServer.on('request', function(request) {
+    console.log("WTF?!");
+
+    var connection = request.accept(null, request.origin);
+
+    connection.on('message', function(message) {
+        if (message.type === 'utf8') {
+            console.log(message.utf8Data);
+            message = JSON.parse(message.utf8Data);
+            SendToAllConnections(message.data, message.controller_id);
+        }
+    });
+
+    connection.on('close', function(connection) {
+    });
+
+    connection.on('open', function(connection) {
+        console.log("OPEN!");
+    });
+
+    connections.push(connection);
+});
+
+function SendToAllConnections(data) {
+    connections.forEach(function (t) {
+        t.send(
+            JSON.stringify(
+                {
+                    data: data
+                }
+            )
+        );
+    });
+
+    console.log("Sent WS data: " + data);
 }
