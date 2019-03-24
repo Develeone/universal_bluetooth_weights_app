@@ -2,6 +2,7 @@
 
 var Parser = require("binary-parser").Parser;
 var noble = require('noble');
+var bodymetrics = require('lib/bodymetrics');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 
@@ -32,7 +33,9 @@ function Connect (device) {
         discoverServices(device)
         .then(function (services) {
             if (services.length > 0)
-                for (var service in services)
+                for (var service in services) {
+                    console.log(services[service]);
+
                     discoverCharacteristics(services[service])
                         .then(function (characteristics) {
                             for (var characteristic in characteristics) {
@@ -59,6 +62,7 @@ function Connect (device) {
                                 });
                             }
                         });
+                }
             else
                 throw new Error('Service not found')
         });
