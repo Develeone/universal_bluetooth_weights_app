@@ -1,4 +1,4 @@
-﻿var debug = false;
+var debug = false;
 
 if (debug)
     console.log("Start");
@@ -9,6 +9,10 @@ var bodymetrics = require('./lib/bodymetrics');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
+
+var debug = false;
+
+var server = require('./lib/server');
 
 noble.on('stateChange', function (state) {
     if (debug)
@@ -80,6 +84,7 @@ function Connect (device) {
         });
     });
 }
+//);
 
 const discoverServices = function (peripheral, serviceUUIDs) {
     return new Promise( function (resolve, reject) {
