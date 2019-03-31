@@ -16,12 +16,14 @@ body {
 }
 
 #weight-container-outer {
+    background: url("../images/weight-container.svg");
+    background-size: contain;
     width: 100vw;
     height: 100vw;
     border-radius: 100%;
     border-left: 10px solid white;
     border-right: 10px solid white;
-    color: #72a5ed;
+    color: white;
     font-size: 5vw;
     text-align: center;
     line-height: 15vw;

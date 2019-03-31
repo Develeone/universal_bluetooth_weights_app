@@ -1,7 +1,7 @@
 var targetWeight = 84.7;
 var currentWeight = 0;
 
-ConnectWS();
+//ConnectWS();
 
 function ConnectWS() {
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -13,7 +13,7 @@ function ConnectWS() {
     };
 
     connection.onerror = function (error) {
-        SetLastData("Error");
+        //            SetLastData("Error");
     };
 
     connection.onmessage = function (message) {
