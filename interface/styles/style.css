@@ -14,6 +14,9 @@ body {
     background: black;
     background-position: center;
     background-size: cover;
+
+    color: white;
+    font-size: 7vw;
 }
 
 #weight-container-outer {
@@ -22,8 +25,6 @@ body {
     width: 95vw;
     height: 95vw;
     margin-left: 2.5vw;
-    color: white;
-    font-size: 7vw;
     text-align: center;
     font-weight: 600;
     position: relative;
@@ -67,4 +68,38 @@ body {
 .body-fat-indicator .indicator-value {
     font-size: 11vw;
     line-height: 8vw;
+}
+
+
+
+
+
+.middle-block {
+    width: 100vw;
+    font-size: 0;
+}
+
+.photo-block, .bmi-block, .water-block {
+    display: inline-block;
+    text-align: center;
+    font-size: 4vw;
+}
+
+.photo-block {
+    width: 20vw;
+}
+
+.bmi-block, .water-block {
+    width: 40vw;
+}
+
+.middle-block .indicator-value {
+    font-size: 6vw;
+    font-weight: 600;
+}
+
+.bmi-block {
+}
+
+.water-block {
 }
