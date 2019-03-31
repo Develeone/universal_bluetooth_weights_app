@@ -8,6 +8,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Akrobat;
+    overflow: hidden;
 }
 
 body {
@@ -139,12 +140,39 @@ body {
 
 
 #chartdiv {
-    width: 100%;
-    height: 600px;
+    width: 128%;
+    margin-left: -16%;
+    height: 400px;
+    margin-top: -2vw;
+    margin-bottom: -2vw;
 }
 
 tspan, text {
-    color: white !important;
-    fill: white !important;
+    color: black !important;
+    fill: black !important;
     font-size: 3vw !important;
+}
+
+.time-range {
+    text-align: center;
+    font-size: 5vw;
+    font-weight: 400;
+}
+
+.time-range .time-range-selector {
+    border: 0.3vw solid white;
+    width: 15vw;
+    padding: 2vw 1vw;
+}
+
+.time-range-selector-container {
+    display: inline-block;
+    border-bottom: 1.5vw solid #343434;
+    padding-bottom: 0.8vw;
+    width: 15vw;
+}
+
+.time-range-selector-container.active {
+
+    border-bottom-color: #9e0005;
 }

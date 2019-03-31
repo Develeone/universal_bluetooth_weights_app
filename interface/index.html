@@ -33,9 +33,13 @@
             chart.data = data;
 
             var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+            dateAxis.renderer.grid.template.strokeOpacity = 0;
+            dateAxis.renderer.baseGrid.disabled = true;
 
             var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
             valueAxis.tooltip.disabled = true;
+            valueAxis.renderer.grid.template.strokeOpacity = 0;
+            valueAxis.renderer.baseGrid.disabled = true;
 
             var series = chart.series.push(new am4charts.LineSeries());
             series.dataFields.dateX = "date";
@@ -103,6 +107,14 @@
 
     <div class="bottom-block">
         <div id="chartdiv"></div>
+
+        <div class="time-range">
+            <div class="time-range-selector-container"><div class="time-range-selector">1 WK</div></div>
+            <div class="time-range-selector-container"><div class="time-range-selector">1 MO</div></div>
+            <div class="time-range-selector-container active"><div class="time-range-selector">3 MO</div></div>
+            <div class="time-range-selector-container"><div class="time-range-selector">1 YR</div></div>
+            <div class="time-range-selector-container"><div class="time-range-selector">ALL</div></div>
+        </div>
     </div>
 
 
