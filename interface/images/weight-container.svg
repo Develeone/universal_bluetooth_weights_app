@@ -1,8 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="210mm" height="297mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-viewBox="0 0 21000 29700"
- xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="210mm" height="297mm" viewBox="0 0 21000 29700">
  <g>
   <path class="fil0" d="M10761.42 2275.55c2450.46,0 4436.94,1986.48 4436.94,4436.94 0,2450.46 -1986.48,4436.94 -4436.94,4436.94 -2450.46,0 -4436.94,-1986.48 -4436.94,-4436.94 0,-2450.46 1986.48,-4436.94 4436.94,-4436.94zm0 144.59c2370.61,0 4292.35,1921.74 4292.35,4292.35 0,2370.61 -1921.74,4292.35 -4292.35,4292.35 -2370.61,0 -4292.35,-1921.74 -4292.35,-4292.35 0,-2370.61 1921.74,-4292.35 4292.35,-4292.35z" fill="white" />
   <path class="fil1 str0" d="M14823.83 4154.46c466.25,739.8 736.08,1615.83 736.08,2554.9 0,1020.11 -318.39,1965.85 -861.12,2743.35l-25.28 0c545.44,-776.38 865.71,-1722.45 865.71,-2743.35 0,-939.69 -271.36,-1815.98 -739.87,-2554.9l24.48 0zm-7999.78 5298.25c-542.73,-777.5 -861.12,-1723.24 -861.12,-2743.35 0,-939.07 269.83,-1815.1 736.08,-2554.9l24.48 0c-468.51,738.92 -739.87,1615.21 -739.87,2554.9 0,1020.9 320.27,1966.97 865.71,2743.35l-25.28 0z" fill="white" />
