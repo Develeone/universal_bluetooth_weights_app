@@ -12,7 +12,7 @@ var isResultsGot = false;
 
 var debug = false;
 
-var server = require('./lib/server');
+var server = require('./lib/server/server');
 
 noble.on('stateChange', function (state) {
     if (debug)
