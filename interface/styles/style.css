@@ -170,9 +170,9 @@ tspan, text {
     border-bottom: 1.5vw solid #343434;
     padding-bottom: 0.8vw;
     width: 15vw;
+    transition: all 0.3s;
 }
 
 .time-range-selector-container.active {
-
     border-bottom-color: #9e0005;
 }

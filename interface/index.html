@@ -109,11 +109,21 @@
         <div id="chartdiv"></div>
 
         <div class="time-range">
-            <div class="time-range-selector-container"><div class="time-range-selector">1 WK</div></div>
-            <div class="time-range-selector-container"><div class="time-range-selector">1 MO</div></div>
-            <div class="time-range-selector-container active"><div class="time-range-selector">3 MO</div></div>
-            <div class="time-range-selector-container"><div class="time-range-selector">1 YR</div></div>
-            <div class="time-range-selector-container"><div class="time-range-selector">ALL</div></div>
+            <div class="time-range-selector-container" onclick="SetTimeRange(this)">
+                <div class="time-range-selector">1 WK</div>
+            </div>
+            <div class="time-range-selector-container" onclick="SetTimeRange(this)">
+                <div class="time-range-selector">1 MO</div>
+            </div>
+            <div class="time-range-selector-container active" onclick="SetTimeRange(this)">
+                <div class="time-range-selector">3 MO</div>
+            </div>
+            <div class="time-range-selector-container" onclick="SetTimeRange(this)">
+                <div class="time-range-selector">1 YR</div>
+            </div>
+            <div class="time-range-selector-container" onclick="SetTimeRange(this)">
+                <div class="time-range-selector">ALL</div>
+            </div>
         </div>
     </div>
 

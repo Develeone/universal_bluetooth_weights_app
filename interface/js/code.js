@@ -36,3 +36,17 @@ function SetLastData(weight) {
 function lerp(from, to) {
     return from+((to-from)/20);
 }
+
+
+
+
+
+function SetTimeRange(object) {
+    var items = document.getElementsByClassName("time-range-selector-container");
+
+    for (var i = 0; i < items.length; i++) {
+        items[i].classList.remove("active");
+    }
+
+    object.classList.add("active");
+}
