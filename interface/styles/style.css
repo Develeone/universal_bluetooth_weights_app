@@ -103,3 +103,14 @@ body {
 
 .water-block {
 }
+
+#chartdiv {
+    width: 100%;
+    height: 600px;
+}
+
+tspan, text {
+    color: white !important;
+    fill: white !important;
+    font-size: 3vw !important;
+}
