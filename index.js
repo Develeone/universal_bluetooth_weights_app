@@ -1,4 +1,6 @@
-﻿if (debug)
+﻿var debug = false;
+
+if (debug)
     console.log("Start");
 
 var Parser = require("binary-parser").Parser;
@@ -7,8 +9,6 @@ var bodymetrics = require('./lib/bodymetrics');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
-
-var debug = false;
 
 noble.on('stateChange', function (state) {
     if (debug)
@@ -30,7 +30,6 @@ noble.on('discover', function (peripheral) {
     }
 });
 
-//noble.on('scanStop', function () {
 function Connect (device) {
     console.log("Производится подключение к весам YUNMAI\n");
 
@@ -81,7 +80,6 @@ function Connect (device) {
         });
     });
 }
-//);
 
 const discoverServices = function (peripheral, serviceUUIDs) {
     return new Promise( function (resolve, reject) {
@@ -159,22 +157,6 @@ const parseWeightingCompleted = function (buffer) {
 };
 
 function display(data) {
-    // if (data.historicalInfo === 1)
-    //     console.log('Historical');
-    //
-    // if (data.userId)
-    //     console.log('User: '+ data.userId);
-    //
-    // if (data.resistance)
-    //     console.log('Resistance: ' + data.resistance);
-    //
-    // if (data.fatPercentage)
-    //     console.log('Fat: ' + data.fatPercentage);
-
-    //console.log(new Date(data.date * 1000), data.weight / 100 + "kg");
-
-    //console.log(data);
-
     if (data.resistance) {
 
         if (isResultsGot)
@@ -185,7 +167,7 @@ function display(data) {
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
-        let metric = bodymetrics.constructor(1, 23, 182);
+        let metric = bodymetrics.constructor(1, 33, 186);
 
         console.log("Вес: " + data.weight / 100 + "кг");
         //console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
@@ -269,5 +251,5 @@ function SendToAllConnections(data) {
         );
     });
 
-    console.log("Sent WS data: " + data);
+    //console.log("Sent WS data: " + data);
 }

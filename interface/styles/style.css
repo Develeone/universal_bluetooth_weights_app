@@ -1,0 +1,30 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: black;
+    background-position: center;
+    background-size: cover;
+}
+
+#weight-container-outer {
+    width: 100vw;
+    height: 100vw;
+    border-radius: 100%;
+    border-left: 10px solid white;
+    border-right: 10px solid white;
+    color: #72a5ed;
+    font-size: 5vw;
+    text-align: center;
+    line-height: 15vw;
+    font-family: sans-serif;
+    /*transform: perspective(400px) rotateY(25deg) rotateX(15deg) rotateZ(-12deg);*/
+}
