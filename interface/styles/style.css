@@ -7,26 +7,110 @@
 html, body {
     margin: 0;
     padding: 0;
+    font-family: Akrobat;
 }
 
 body {
     background: black;
     background-position: center;
     background-size: cover;
+
+    color: white;
+    font-size: 7vw;
 }
 
 #weight-container-outer {
-    background: url("../images/weight-container.svg");
+    background: url("../images/weight-container.svg") no-repeat center;
     background-size: contain;
-    width: 100vw;
-    height: 100vw;
-    border-radius: 100%;
-    border-left: 10px solid white;
-    border-right: 10px solid white;
-    color: white;
-    font-size: 5vw;
+    width: 95vw;
+    height: 95vw;
+    margin-left: 2.5vw;
     text-align: center;
-    line-height: 15vw;
-    font-family: sans-serif;
-    /*transform: perspective(400px) rotateY(25deg) rotateX(15deg) rotateZ(-12deg);*/
+    font-weight: 600;
+    position: relative;
+}
+
+#weight {
+    font-size: 28vw;
+    line-height: 93vw;
+    min-width: 45vw;
+    display: inline-block;
+}
+
+.body-fat-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 80vw;
+    height: 80vw;
+
+    margin-left: 7.5vw;
+    margin-top: 7.5vw;
+
+    padding-top: 55vw;
+
+    background: url('https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88765331508868313940/Well_master.jpg?width=768') no-repeat;
+    background-position: center 68vw;
+    background-size: cover;
+
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+
+    z-index: -1;
+}
+
+.body-fat-indicator .indicator-name {
+    font-size: 4vw;
+}
+
+.body-fat-indicator .indicator-value {
+    font-size: 11vw;
+    line-height: 8vw;
+}
+
+
+
+
+
+.middle-block {
+    width: 100vw;
+    font-size: 0;
+}
+
+.photo-block, .bmi-block, .water-block {
+    display: inline-block;
+    text-align: center;
+    font-size: 4vw;
+}
+
+.photo-block {
+    width: 20vw;
+}
+
+.bmi-block, .water-block {
+    width: 40vw;
+}
+
+.middle-block .indicator-value {
+    font-size: 6vw;
+    font-weight: 600;
+}
+
+.bmi-block {
+}
+
+.water-block {
+}
+
+#chartdiv {
+    width: 100%;
+    height: 600px;
+}
+
+tspan, text {
+    color: white !important;
+    fill: white !important;
+    font-size: 3vw !important;
 }
