@@ -12,7 +12,8 @@ var isResultsGot = false;
 
 var debug = false;
 
-var server = require('./lib/server/server');
+var user_data_model = require('./lib/server/models/user_data');
+user_data_model.getAllUserDatas(1);
 
 noble.on('stateChange', function (state) {
     if (debug)
