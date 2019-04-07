@@ -174,24 +174,30 @@ function display(data) {
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
-        let metric = bodymetrics.constructor(1, 33, 186);
+        let metric = bodymetrics.constructor(1, 23, 180);
 
-        console.log("Вес: " + data.weight / 100 + "кг");
         //console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
-        console.log("ИМТ: " + metric.getBMI(weight).toFixed(2));
-        console.log("Мышцы: " + metric.getMuscle(weight, resistance).toFixed(2) + "%");
-        console.log("Вода: " + metric.getWater(weight, resistance).toFixed(2) + "%");
-        console.log("Кости: " + metric.getBonePercentage(weight, resistance).toFixed(2) + "%");
+
+        console.log("Вес: "     + data.weight / 100 + "кг");
+        console.log("ИМТ: "     + metric.getBMI(weight).toFixed(2));
+        console.log("Мышцы: "   + metric.getMuscle(weight, resistance).toFixed(2) + "%");
+        console.log("Вода: "    + metric.getWater(weight, resistance).toFixed(2) + "%");
+        console.log("Кости: "   + metric.getBonePercentage(weight, resistance).toFixed(2) + "%");
         console.log("Вн. жир: " + metric.getVisceralFat(weight));
-        console.log("Жир: " + metric.getBodyFat(weight, resistance).toFixed(2) + "%\n");
+        console.log("Жир: "     + metric.getBodyFat(weight, resistance).toFixed(2) + "%");
 
         //console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
 
         isResultsGot = true;
+
+        SendToAllConnections({
+            weight: (data.weight / 100),
+            resistance: data.resistance
+        });
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
-        SendToAllConnections((data.weight / 100));
+        SendToAllConnections({weight: (data.weight / 100)});
         isResultsGot = false;
     }
 }
@@ -249,13 +255,7 @@ wsServer.on('request', function(request) {
 
 function SendToAllConnections(data) {
     connections.forEach(function (t) {
-        t.send(
-            JSON.stringify(
-                {
-                    data: data
-                }
-            )
-        );
+        t.send(JSON.stringify(data));
     });
 
     //console.log("Sent WS data: " + data);

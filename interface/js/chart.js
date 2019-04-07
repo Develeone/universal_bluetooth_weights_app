@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var open = 0;
     var close = 0;
 
-    for (var i = 1; i < 6; i++) {
+    for (var i = 1; i < 28; i++) {
         data.push({ date: new Date(2018, 0, i), open: Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 4), close: Math.round(open + Math.random() * 5 + i / 5 - (Math.random() < 0.5 ? 1 : -1) * Math.random() * 2) });
     }
 
