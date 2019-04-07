@@ -35,8 +35,11 @@ function ConnectWS() {
 
         SetLastWeightData(weight);
 
-        if (resistance)
+        if (resistance) {
           SetBodymetricsData(weight, resistance);
+
+          // TODO: Паша, делай сюда
+        }
     };
 
 }
