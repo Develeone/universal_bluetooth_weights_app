@@ -14,7 +14,7 @@ var debug = false;
 
 var user_data_model = require('./lib/server/models/user_data');
 user_data_model.getAllUserDatas(1);
-user_data_model.createUserData(1, 70, 700);
+//user_data_model.createUserData(1, 70, 700);
 
 noble.on('stateChange', function (state) {
     if (debug)
