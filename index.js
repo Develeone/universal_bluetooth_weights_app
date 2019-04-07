@@ -190,11 +190,18 @@ function display(data) {
 
         isResultsGot = true;
 
-        SendToAllConnections({
-            weight: (data.weight / 100),
-            resistance: data.resistance,
-            previousBodyMetrics: user_data_model.getAllUserDatas(1)
+
+        let self = this;
+
+        user_data_model.getAllUserDatas(1).then(users_datas => {
+            console.log(users_datas);
+            SendToAllConnections({
+                weight: (data.weight / 100),
+                resistance: data.resistance,
+                previousBodyMetrics: users_datas
+            });
         });
+
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
