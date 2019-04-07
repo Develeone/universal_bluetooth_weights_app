@@ -8,6 +8,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Akrobat;
+    overflow: hidden;
 }
 
 body {
@@ -59,6 +60,8 @@ body {
     border-radius: 100%;
 
     z-index: -1;
+
+    box-shadow: 0vw -7vw 10vw black inset;
 }
 
 .body-fat-indicator .indicator-name {
@@ -77,16 +80,14 @@ body {
 .middle-block {
     width: 100vw;
     font-size: 0;
+    margin-top: -5vw;
 }
 
 .photo-block, .bmi-block, .water-block {
     display: inline-block;
     text-align: center;
     font-size: 4vw;
-}
-
-.photo-block {
-    width: 20vw;
+    vertical-align: top;
 }
 
 .bmi-block, .water-block {
@@ -98,19 +99,80 @@ body {
     font-weight: 600;
 }
 
+.photo-block {
+    width: 15vw;
+    height: 15vw;
+
+    margin: 2.5vw;
+    margin-top: 6vw;
+
+    border: 0.4vw solid white;
+}
+
+.photo-block img {
+    width: 50%;
+    margin-top: 25%;
+}
+
 .bmi-block {
 }
 
 .water-block {
 }
 
-#chartdiv {
+.middle-block .bar {
+    background-size: cover;
+    background-position: center;
     width: 100%;
-    height: 600px;
+    height: 1.3vw;
+    margin-top: 1vw;
+}
+
+.bmi-block .bar {
+    background-image: url("../images/bmi_bar.svg");
+}
+
+.water-block .bar {
+    background-color: white;
+}
+
+
+
+
+#chartdiv {
+    width: 128%;
+    margin-left: -16%;
+    height: 400px;
+    margin-top: -2vw;
+    margin-bottom: -2vw;
 }
 
 tspan, text {
-    color: white !important;
-    fill: white !important;
+    color: black !important;
+    fill: black !important;
     font-size: 3vw !important;
+}
+
+.time-range {
+    text-align: center;
+    font-size: 5vw;
+    font-weight: 400;
+}
+
+.time-range .time-range-selector {
+    border: 0.3vw solid white;
+    width: 15vw;
+    padding: 2vw 1vw;
+}
+
+.time-range-selector-container {
+    display: inline-block;
+    border-bottom: 1.5vw solid #343434;
+    padding-bottom: 0.8vw;
+    width: 15vw;
+    transition: all 0.3s;
+}
+
+.time-range-selector-container.active {
+    border-bottom-color: #9e0005;
 }
