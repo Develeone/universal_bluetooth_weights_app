@@ -20,6 +20,24 @@ body {
     font-size: 7vw;
 }
 
+
+
+#chartdiv {
+    width: 128%;
+    margin-left: -16%;
+    height: 400px;
+    margin-top: -2vw;
+    margin-bottom: -2vw;
+}
+
+tspan, text {
+    color: white !important;
+    fill: white !important;
+    font-size: 3vw !important;
+}
+
+
+
 #weight-container-outer {
     background: url("../images/weight-container.svg") no-repeat center;
     background-size: contain;
@@ -52,7 +70,7 @@ body {
     padding-top: 55vw;
 
     background: url('https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88765331508868313940/Well_master.jpg?width=768') no-repeat;
-    background-position: center 68vw;
+    background-position: center 82vw;
     background-size: cover;
 
     -webkit-border-radius: 100%;
@@ -62,6 +80,8 @@ body {
     z-index: -1;
 
     box-shadow: 0vw -7vw 10vw black inset;
+
+    transition: all 1s;
 }
 
 .body-fat-indicator .indicator-name {
@@ -132,26 +152,35 @@ body {
     background-image: url("../images/bmi_bar.svg");
 }
 
+.bmi-block .bar .value {
+    width: 1.5vw;
+    height: 100%;
+
+    background: white;
+
+    margin-left: -2vw;
+
+    transition: all 1s;
+}
+
 .water-block .bar {
     background-color: white;
+    padding: 0;
+}
+
+.water-block .bar .value {
+    width: 0;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    background: #0091d4;
+
+    transition: width 1s;
 }
 
 
-
-
-#chartdiv {
-    width: 128%;
-    margin-left: -16%;
-    height: 400px;
-    margin-top: -2vw;
-    margin-bottom: -2vw;
-}
-
-tspan, text {
-    color: black !important;
-    fill: black !important;
-    font-size: 3vw !important;
-}
 
 .time-range {
     text-align: center;
