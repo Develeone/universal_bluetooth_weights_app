@@ -37,7 +37,7 @@ function ConnectWS() {
 
         if (resistance) {
           SetBodymetricsData(weight, resistance);
-
+          showChart(message.previousBodyMetrics);
           // TODO: Паша, делай сюда
         }
     };

@@ -192,7 +192,8 @@ function display(data) {
 
         SendToAllConnections({
             weight: (data.weight / 100),
-            resistance: data.resistance
+            resistance: data.resistance,
+            previousBodyMetrics: user_data_model.getAllUserDatas(1)
         });
     } else {
         process.stdout.cursorTo(0);
