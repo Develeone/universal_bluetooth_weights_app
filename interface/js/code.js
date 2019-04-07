@@ -75,7 +75,7 @@ function SetBodymetricsData(weight, resistance) {
   document.querySelector(".bmi-block .indicator-value").innerHTML = BMI;
   document.querySelector(".water-block .indicator-value").innerHTML = water + "%";
   document.querySelector(".body-fat-indicator .indicator-value").innerHTML = bodyFat;
-  document.querySelector(".body-fat-indicator").style.backgroundPositionY = (80 - parseInt(bodyFat)) + "vw";
+  document.querySelector(".body-fat-indicator").style.backgroundPositionY = (70 - parseInt(bodyFat)) + "vw";
   document.querySelector(".water-block .bar .value").style.width = water + "%";
   document.querySelector(".bmi-block .bar .value").style.marginLeft = BMI * 1.5 + "%";
 }

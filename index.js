@@ -194,6 +194,8 @@ function display(data) {
             weight: (data.weight / 100),
             resistance: data.resistance
         });
+
+        user_data_model.createUserData(getUserId(), weight, resistance);
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
@@ -206,7 +208,9 @@ function display(data) {
 
 
 
-
+function getUserId () {
+    return 1;
+}
 
 
 

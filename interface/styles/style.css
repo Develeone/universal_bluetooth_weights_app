@@ -39,7 +39,7 @@ tspan, text {
 
 
 #weight-container-outer {
-    background: url("../images/weight-container.svg") no-repeat center;
+    background: url("../images/circle.gif") no-repeat center;
     background-size: contain;
     width: 95vw;
     height: 95vw;
@@ -47,6 +47,11 @@ tspan, text {
     text-align: center;
     font-weight: 600;
     position: relative;
+}
+
+.weight-container-inner {
+    position: absolute;
+    width: 100%;
 }
 
 #weight {
@@ -61,13 +66,13 @@ tspan, text {
     top: 0;
     left: 0;
 
-    width: 80vw;
-    height: 80vw;
+    width: 73vw;
+    height: 80%;
 
-    margin-left: 7.5vw;
-    margin-top: 7.5vw;
+    margin-left: 11.2vw;
+    margin-top: 9vw;
 
-    padding-top: 55vw;
+    padding-top: 51vw;
 
     background: url('https://a.1stdibscdn.com/archivesE/upload/f_30733/f_88765331508868313940/Well_master.jpg?width=768') no-repeat;
     background-position: center 82vw;
@@ -77,9 +82,7 @@ tspan, text {
     -moz-border-radius: 100%;
     border-radius: 100%;
 
-    z-index: -1;
-
-    box-shadow: 0vw -7vw 10vw black inset;
+    box-shadow: 0 -7vw 10vw black inset;
 
     transition: all 1s;
 }
