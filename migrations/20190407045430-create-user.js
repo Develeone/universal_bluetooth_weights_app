@@ -17,6 +17,9 @@ module.exports = {
       height: {
         type: Sequelize.INTEGER
       },
+      isMale: {
+          type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
