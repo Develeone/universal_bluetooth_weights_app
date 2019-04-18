@@ -17,7 +17,7 @@ module.exports = {
       height: {
         type: Sequelize.INTEGER
       },
-      isMale: {
+      is_male: {
           type: Sequelize.BOOLEAN
       },
       phone_number: {
