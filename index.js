@@ -12,12 +12,18 @@ var isResultsGot = false;
 
 var debug = false;
 
+//Определение моделей
 var user_data_model = require('./lib/server/models/user_data');
 var user_model = require('./lib/server/models/user');
+var user_photo_model = require('./lib/server/models/user_photo');
 
-user_model.getUser(1);
-user_data_model.getAllUserDatas(1);
+
+//Тестирование методов
+//user_model.getUser(1);
+//user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
+user_photo_model.createUserPhoto(1, "awdawdwad");
+user_photo_model.getAllUserPhotos(1, 1);
 
 noble.on('stateChange', function (state) {
     if (debug)
