@@ -22,8 +22,12 @@ var user_photo_model = require('./lib/server/models/user_photo');
 //user_model.getUser(1);
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
-user_photo_model.createUserPhoto(1, "awdawdwad");
-user_photo_model.getAllUserPhotos(1, 1);
+//user_photo_model.createUserPhoto(1, "test");
+user_photo_model.getAllUserPhotos(1, 1, onUserPhotoGot);
+
+function onUserPhotoGot(user_photo) {
+    console.log(user_photo);
+}
 
 noble.on('stateChange', function (state) {
     if (debug)
