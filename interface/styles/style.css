@@ -23,8 +23,9 @@ body {
 
 
 #chartdiv {
-    width: 128%;
-    margin-left: -16%;
+    width: 100%;
+    /*width: 128%;*/
+    /*margin-left: -16%;*/
     height: 400px;
     margin-top: -2vw;
     margin-bottom: -2vw;
