@@ -23,11 +23,7 @@ var user_photo_model = require('./lib/server/models/user_photo');
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
 //user_photo_model.createUserPhoto(1, "test");
-user_photo_model.getAllUserPhotos(1, 1, onUserPhotoGot);
-
-function onUserPhotoGot(user_photo) {
-    console.log(user_photo);
-}
+//user_photo_model.getAllUserPhotos(1, 1, onUserPhotoGot);
 
 noble.on('stateChange', function (state) {
     if (debug)
@@ -187,6 +183,8 @@ function display(data) {
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
+        user_data_model.createUserData(1, weight, resistance);
+
         let metric = bodymetrics.constructor(1, 23, 180);
 
         //console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
@@ -202,9 +200,6 @@ function display(data) {
         //console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
 
         isResultsGot = true;
-
-
-        let self = this;
 
         user_data_model.getAllUserDatas(1).then(users_datas => {
             console.log(users_datas);
@@ -252,15 +247,23 @@ wsServer = new WebSocketServer({
 
 // WebSocket server
 wsServer.on('request', function(request) {
-    console.log("WTF?!");
+    console.log("Connection got!");
 
     var connection = request.accept(null, request.origin);
 
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
-            console.log(message.utf8Data);
             message = JSON.parse(message.utf8Data);
-            SendToAllConnections(message.data, message.controller_id);
+            console.log("Server has got message: ", message);
+
+            if (message.action == 'photo_got') {
+                console.log("Photo is saving");
+                user_photo_model.createUserPhoto(1, message.data);
+            }
+            else {
+                console.log("Data is sending");
+                SendToAllConnections(message.data, message.controller_id);
+            }
         }
     });
 
@@ -278,6 +281,4 @@ function SendToAllConnections(data) {
     connections.forEach(function (t) {
         t.send(JSON.stringify(data));
     });
-
-    //console.log("Sent WS data: " + data);
 }
