@@ -243,7 +243,9 @@ server.listen(1337, function() { });
 
 // create the server
 wsServer = new WebSocketServer({
-    httpServer: server
+    httpServer: server,
+    maxReceivedMessageSize: 10 * 1024 * 1024,
+    maxReceivedFrameSize: 131072
 });
 
 // WebSocket server
