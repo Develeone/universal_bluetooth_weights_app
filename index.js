@@ -17,9 +17,12 @@ var user_data_model = require('./lib/server/models/user_data');
 var user_model = require('./lib/server/models/user');
 var user_photo_model = require('./lib/server/models/user_photo');
 
+//Вебсокет-сервер
+var websocket_server = require('./lib/server/websocket_server');
+websocket_server.create_server();
 
 //Тестирование методов
-//user_model.createUser("Дмитрий", "1996-07-16", "179", true, "89242336096");
+//user_model.createUser("Дмитрий2", "1996-07-16", "179", true, "89242336096");
 //user_model.getUser(1);
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
@@ -217,83 +220,4 @@ function display(data) {
         SendToAllConnections({weight: (data.weight / 100)});
         isResultsGot = false;
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-var WebSocketServer = require('websocket').server;
-var http = require('http');
-var connections = [];
-
-var server = http.createServer(function(request, response) {
-    // process HTTP request. Since we're writing just WebSockets
-    // server we don't have to implement anything.
-});
-server.listen(1337, function() { });
-
-// create the server
-wsServer = new WebSocketServer({
-    httpServer: server,
-    maxReceivedMessageSize: 10 * 1024 * 1024,
-    maxReceivedFrameSize: 131072
-});
-
-// WebSocket server
-wsServer.on('request', function(request) {
-    console.log("Connection got!");
-
-    var connection = request.accept(null, request.origin);
-
-    connection.on('message', function(message) {
-        if (message.type === 'utf8') {
-            message = JSON.parse(message.utf8Data);
-            console.log("Server has got message: ", message);
-
-            if (message.action == 'photo_got') {
-                console.log("Photo is saving");
-                user_photo_model.createUserPhoto(1, message.data);
-            }
-            else if (message.action == 'phone_got') {
-                console.log("Phone got, trying to find user");
-                user_model.getUserByPhone(message.data, function (user) {
-                    var response = {
-                        action: "gettingUserByPhone",
-                        user: user
-                    };
-                    SendToAllConnections(response);
-                });
-            }
-            else {
-                console.log("Data is sending");
-                message.data.action = "weighting";
-                SendToAllConnections(message.data);
-            }
-        }
-    });
-
-    connection.on('close', function(connection) {
-        console.log("Client has disconnected")
-    });
-
-    connection.on('open', function(connection) {
-        console.log("OPEN!");
-    });
-
-    connections.push(connection);
-});
-
-function SendToAllConnections(data) {
-    connections.forEach(function (t) {
-        t.send(JSON.stringify(data));
-    });
 }
