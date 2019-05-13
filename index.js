@@ -263,9 +263,20 @@ wsServer.on('request', function(request) {
                 console.log("Photo is saving");
                 user_photo_model.createUserPhoto(1, message.data);
             }
+            else if (message.action == 'phone_got') {
+                console.log("Phone got, trying to find user");
+                user_model.getUserByPhone(message.data, function (user) {
+                    var response = {
+                        action: "gettingUserByPhone",
+                        user: user
+                    };
+                    SendToAllConnections(response);
+                });
+            }
             else {
                 console.log("Data is sending");
-                SendToAllConnections(message.data, message.controller_id);
+                message.data.action = "weighting";
+                SendToAllConnections(message.data);
             }
         }
     });
