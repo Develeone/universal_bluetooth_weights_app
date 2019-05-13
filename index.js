@@ -23,6 +23,7 @@ websocket_server.create_server();
 
 //Тестирование методов
 //user_model.createUser("Дмитрий2", "1996-07-16", "179", true, "89242336096");
+//user_model.updateUser("Дми", "1996-07-16", "179", true, "79242336096");
 //user_model.getUser(1);
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
