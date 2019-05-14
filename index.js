@@ -12,9 +12,23 @@ var isResultsGot = false;
 
 var debug = false;
 
+//Определение моделей
 var user_data_model = require('./lib/server/models/user_data');
-user_data_model.getAllUserDatas(1);
+var user_model = require('./lib/server/models/user');
+var user_photo_model = require('./lib/server/models/user_photo');
+
+//Вебсокет-сервер
+var websocket_server = require('./lib/server/websocket_server');
+websocket_server.create_server();
+
+//Тестирование методов
+//user_model.createUser("Дмитрий2", "1996-07-16", "179", true, "89242336096");
+//user_model.updateUser("Дми", "1996-07-16", "179", true, "79242336096");
+//user_model.getUser(1);
+//user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
+//user_photo_model.createUserPhoto(1, "test");
+//user_photo_model.getAllUserPhotos(1, 1, onUserPhotoGot);
 
 noble.on('stateChange', function (state) {
     if (debug)
@@ -174,6 +188,8 @@ function display(data) {
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
+        user_data_model.createUserData(1, weight, resistance);
+
         let metric = bodymetrics.constructor(1, 23, 180);
 
         //console.log("LBMCoefficient: " + metric.getLBMCoefficient(weight, resistance));
@@ -190,77 +206,19 @@ function display(data) {
 
         isResultsGot = true;
 
-        SendToAllConnections({
-            weight: (data.weight / 100),
-            resistance: data.resistance
+        user_data_model.getAllUserDatas(1).then(users_datas => {
+            console.log(users_datas);
+            SendToAllConnections({
+                weight: (data.weight / 100),
+                resistance: data.resistance,
+                previousBodyMetrics: users_datas
+            });
         });
 
-        user_data_model.createUserData(getUserId(), weight, resistance);
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
         SendToAllConnections({weight: (data.weight / 100)});
         isResultsGot = false;
     }
-}
-
-
-
-
-
-function getUserId () {
-    return 1;
-}
-
-
-
-
-
-
-
-var WebSocketServer = require('websocket').server;
-var http = require('http');
-var connections = [];
-
-var server = http.createServer(function(request, response) {
-    // process HTTP request. Since we're writing just WebSockets
-    // server we don't have to implement anything.
-});
-server.listen(1337, function() { });
-
-// create the server
-wsServer = new WebSocketServer({
-    httpServer: server
-});
-
-// WebSocket server
-wsServer.on('request', function(request) {
-    console.log("WTF?!");
-
-    var connection = request.accept(null, request.origin);
-
-    connection.on('message', function(message) {
-        if (message.type === 'utf8') {
-            console.log(message.utf8Data);
-            message = JSON.parse(message.utf8Data);
-            SendToAllConnections(message.data, message.controller_id);
-        }
-    });
-
-    connection.on('close', function(connection) {
-    });
-
-    connection.on('open', function(connection) {
-        console.log("OPEN!");
-    });
-
-    connections.push(connection);
-});
-
-function SendToAllConnections(data) {
-    connections.forEach(function (t) {
-        t.send(JSON.stringify(data));
-    });
-
-    //console.log("Sent WS data: " + data);
 }
