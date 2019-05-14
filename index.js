@@ -10,7 +10,7 @@ var bodymetrics = require('./lib/bodymetrics');
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
 
-var debug = false;
+var debug = true;
 
 //Определение моделей
 var user_data_model = require('./lib/server/models/user_data');
