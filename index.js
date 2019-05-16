@@ -1,3 +1,4 @@
+var debug = true;
 import {get_logined_user_id} from "./lib/server/auth_controller";
 
 var debug = false;
@@ -12,8 +13,6 @@ var bodymetrics = require('./lib/bodymetrics');
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
 
-var debug = true;
-
 //Определение моделей
 var user_data_model = require('./lib/server/models/user_data');
 var user_model = require('./lib/server/models/user');
@@ -24,6 +23,7 @@ var websocket_server = require('./lib/server/websocket_server');
 websocket_server.create_server();
 
 //Тестирование методов
+//user_data_model.getLastWeight(1);
 //user_model.createUser("Дмитрий2", "1996-07-16", "179", true, "89242336096");
 //user_model.updateUser("Дми", "1996-07-16", "179", true, "79242336096");
 //user_model.getUser(1);
@@ -43,7 +43,7 @@ noble.on('discover', function (peripheral) {
     var localName = advertisement.localName;
 
     if (debug)
-        console.log("Bluetooth peripheral found: " + localName);
+        console.log("Bluetooth peripheral found: ", localName);
 
     if (localName === target_controller_name) {
         if (debug)
@@ -194,7 +194,7 @@ function display(data) {
 
         if (loggined_user_id) {
             user_data_model.createUserData(loggined_user_id, weight, resistance);
-            user_data_model.getAllUserDatas(loggined_user_id, function (users_datas) {
+            user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
                 console.log(users_datas);
                 websocket_server.sendToAllConnections({
                     action: "weighting",
@@ -220,6 +220,7 @@ function display(data) {
         //console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
 
         isResultsGot = true;
+
 
     } else {
         process.stdout.cursorTo(0);
