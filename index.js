@@ -1,5 +1,4 @@
 var debug = true;
-import {get_logined_user_id} from "./lib/server/auth_controller";
 
 var debug = false;
 
@@ -9,6 +8,8 @@ if (debug)
 var Parser = require("binary-parser").Parser;
 var noble = require('noble');
 var bodymetrics = require('./lib/bodymetrics');
+
+var auth = require('./lib/server/auth_controller');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
@@ -190,7 +191,7 @@ function display(data) {
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
-        let loggined_user_id = get_logined_user_id();
+        let loggined_user_id = auth.get_logined_user_id();
 
         if (loggined_user_id) {
             user_data_model.createUserData(loggined_user_id, weight, resistance);
