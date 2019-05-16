@@ -206,10 +206,10 @@ function display(data) {
 
         isResultsGot = true;
 
-        user_data_model.getAllUserDatas(1).then(users_datas => {
+        user_data_model.getAllUserDatas(1, function (users_datas) {
             console.log(users_datas);
             websocket_server.sendToAllConnections({
-                message: "weighting",
+                action: "weighting",
                 weight: (data.weight / 100),
                 resistance: data.resistance,
                 previousBodyMetrics: users_datas
@@ -219,7 +219,7 @@ function display(data) {
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
-        websocket_server.sendToAllConnections({message: "weighting", weight: (data.weight / 100)});
+        websocket_server.sendToAllConnections({action: "weighting", weight: (data.weight / 100)});
         isResultsGot = false;
     }
 }
