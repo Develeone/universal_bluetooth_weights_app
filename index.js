@@ -10,7 +10,7 @@ var bodymetrics = require('./lib/bodymetrics');
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
 
-var debug = false;
+var debug = true;
 
 //Определение моделей
 var user_data_model = require('./lib/server/models/user_data');
@@ -208,7 +208,8 @@ function display(data) {
 
         user_data_model.getAllUserDatas(1).then(users_datas => {
             console.log(users_datas);
-            SendToAllConnections({
+            websocket_server.sendToAllConnections({
+                message: "weighting",
                 weight: (data.weight / 100),
                 resistance: data.resistance,
                 previousBodyMetrics: users_datas
@@ -218,7 +219,7 @@ function display(data) {
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
-        SendToAllConnections({weight: (data.weight / 100)});
+        websocket_server.sendToAllConnections({message: "weighting", weight: (data.weight / 100)});
         isResultsGot = false;
     }
 }
