@@ -20,6 +20,7 @@ var websocket_server = require('./lib/server/websocket_server');
 websocket_server.create_server();
 
 //Тестирование методов
+//user_data_model.getLastWeight(1);
 //user_model.createUser("Дмитрий2", "1996-07-16", "179", true, "89242336096");
 //user_model.updateUser("Дми", "1996-07-16", "179", true, "79242336096");
 //user_model.getUser(1);
@@ -207,7 +208,7 @@ function display(data) {
         user_data_model.getAllUserDatas(1, users_datas => {
             console.log(users_datas);
             websocket_server.sendToAllConnections({
-                message: "weighting",
+                action: "weighting",
                 weight: (data.weight / 100),
                 resistance: data.resistance,
                 previousBodyMetrics: users_datas
@@ -217,7 +218,7 @@ function display(data) {
     } else {
         process.stdout.cursorTo(0);
         process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
-        websocket_server.sendToAllConnections({message: "weighting", weight: (data.weight / 100)});
+        websocket_server.sendToAllConnections({action: "weighting", weight: (data.weight / 100)});
         isResultsGot = false;
     }
 }
