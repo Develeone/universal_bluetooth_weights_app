@@ -1,3 +1,5 @@
+import {get_logined_user_id} from "./lib/server/auth_controller";
+
 var debug = false;
 
 if (debug)
@@ -188,7 +190,20 @@ function display(data) {
         let weight = data.weight / 100;
         let resistance = data.resistance;
 
-        user_data_model.createUserData(1, weight, resistance);
+        let loggined_user_id = get_logined_user_id();
+
+        if (loggined_user_id) {
+            user_data_model.createUserData(loggined_user_id, weight, resistance);
+            user_data_model.getAllUserDatas(loggined_user_id, function (users_datas) {
+                console.log(users_datas);
+                websocket_server.sendToAllConnections({
+                    action: "weighting",
+                    weight: (data.weight / 100),
+                    resistance: data.resistance,
+                    previousBodyMetrics: users_datas
+                });
+            });
+        }
 
         let metric = bodymetrics.constructor(1, 23, 180);
 
@@ -205,16 +220,6 @@ function display(data) {
         //console.log("Fat (our): " + ((1 - (metric.getLBMCoefficient(weight, resistance)/weight)) * 100));
 
         isResultsGot = true;
-
-        user_data_model.getAllUserDatas(1, function (users_datas) {
-            console.log(users_datas);
-            websocket_server.sendToAllConnections({
-                action: "weighting",
-                weight: (data.weight / 100),
-                resistance: data.resistance,
-                previousBodyMetrics: users_datas
-            });
-        });
 
     } else {
         process.stdout.cursorTo(0);
