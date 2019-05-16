@@ -197,9 +197,18 @@ function display(data) {
             user_data_model.createUserData(loggined_user_id, weight, resistance);
             user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
                 console.log(users_datas);
+
+                let weight_diff = "";
+
+                if (users_datas.length > 2) {
+                    let diff = weight - users_datas[users_datas.length - 2];
+                    weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff) + "kg";
+                }
+
                 websocket_server.sendToAllConnections({
                     action: "weighting",
                     weight: (data.weight / 100),
+                    weight_diff: weight_diff,
                     resistance: data.resistance,
                     previousBodyMetrics: users_datas
                 });
