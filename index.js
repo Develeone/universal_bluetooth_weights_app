@@ -1,4 +1,4 @@
-var debug = false;
+var debug = true;
 
 if (debug)
     console.log("Start");
@@ -9,8 +9,6 @@ var bodymetrics = require('./lib/bodymetrics');
 
 var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
 var isResultsGot = false;
-
-var debug = true;
 
 //Определение моделей
 var user_data_model = require('./lib/server/models/user_data');
@@ -41,7 +39,7 @@ noble.on('discover', function (peripheral) {
     var localName = advertisement.localName;
 
     if (debug)
-        console.log("Bluetooth peripheral found: " + localName);
+        console.log("Bluetooth peripheral found: ", localName);
 
     if (localName === target_controller_name) {
         if (debug)
@@ -206,7 +204,7 @@ function display(data) {
 
         isResultsGot = true;
 
-        user_data_model.getAllUserDatas(1).then(users_datas => {
+        user_data_model.getAllUserDatas(1, users_datas => {
             console.log(users_datas);
             websocket_server.sendToAllConnections({
                 message: "weighting",
