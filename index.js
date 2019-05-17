@@ -201,8 +201,8 @@ function display(data) {
                 let weight_diff = "";
 
                 if (users_datas.length > 2) {
-                    let diff = weight - users_datas[users_datas.length - 2];
-                    weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff) + "kg";
+                    let diff = weight - users_datas[users_datas.length - 2].weight;
+                    weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff).toFixed(2) + "kg";
                 }
 
                 websocket_server.sendToAllConnections({
