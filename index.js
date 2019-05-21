@@ -29,7 +29,7 @@ websocket_server.create_server();
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
 //user_photo_model.createUserPhoto(1, "test");
-//user_photo_model.getUserPhoto(1, 1, onUserPhotoGot);
+//user_photo_model.getUserPhoto(1, 1, function (photo) {console.log(JSON.stringify(photo));});
 
 noble.on('stateChange', function (state) {
     if (debug)
