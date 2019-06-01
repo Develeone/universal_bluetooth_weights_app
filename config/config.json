@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "revision_admin",
+    "password": 89242336096,
+    "database": "revision_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "revision_admin",
+    "password": 89242336096,
+    "database": "revision_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "revision_admin",
+    "password": 89242336096,
+    "database": "revision_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
