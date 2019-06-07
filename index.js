@@ -17,6 +17,7 @@ var user_data_model = require('./lib/server/models/user_data');
 var user_model = require('./lib/server/models/user');
 var user_photo_model = require('./lib/server/models/user_photo');
 var activity_types = require('./lib/server/models/activity_type');
+var training_goals_types = require('./lib/server/models/training_goals_type');
 
 //Вебсокет-сервер
 var websocket_server = require('./lib/server/websocket_server');
@@ -29,9 +30,14 @@ websocket_server.create_server();
 //user_model.getUserByPhone("9242336096", function (result) {console.log(JSON.stringify(result, null, 4));});
 //activity_types.getType(5, function (result) {console.log(JSON.stringify(result, null, 4));});
 //activity_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
+//training_goals_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
+//training_goals_types.getType(1, function (result) {console.log(JSON.stringify(result, null, 4));});
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
 //user_photo_model.createUserPhoto(1, "test");
+//user_data_model.addUniqueUserCount(2).then(result => {console.log(result);});
+
+//user_model.updateTrainingGoal('9242336095', 1).then(result => {console.log(result);});
 //user_photo_model.getUserPhoto(1, 1, function (photo) {console.log(JSON.stringify(photo));});
 
 noble.on('stateChange', function (state) {
