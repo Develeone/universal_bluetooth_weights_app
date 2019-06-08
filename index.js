@@ -33,7 +33,7 @@ websocket_server.create_server();
 //training_goals_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
 //training_goals_types.getType(1, function (result) {console.log(JSON.stringify(result, null, 4));});
 //user_data_model.getAllUserDatas(1);
-user_data_model.createUserData(1, 70, 700);
+//user_data_model.createUserData(1, 70, 700);
 //user_photo_model.createUserPhoto(1, "test");
 //user_data_model.addUniqueUserCount(3).then(result => {console.log(result);});
 
