@@ -201,8 +201,10 @@ function display(data) {
         let loggined_user_id = auth.get_logined_user_id();
 
         if (loggined_user_id) {
-            user_data_model.createUserData(loggined_user_id, weight, resistance).then((_) => {
+            user_data_model.createUserData(loggined_user_id, weight, resistance).then((result) => {
                 user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
+                    users_datas.push(result);
+    
                     console.log(users_datas);
         
                     let weight_diff = "";
