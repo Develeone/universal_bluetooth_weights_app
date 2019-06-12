@@ -201,23 +201,26 @@ function display(data) {
         let loggined_user_id = auth.get_logined_user_id();
 
         if (loggined_user_id) {
-            user_data_model.createUserData(loggined_user_id, weight, resistance);
-            user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
-                console.log(users_datas);
-
-                let weight_diff = "";
-
-                if (users_datas.length > 2) {
-                    let diff = weight - users_datas[users_datas.length - 2].weight;
-                    weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff).toFixed(2) + "kg";
-                }
-
-                websocket_server.sendToAllConnections({
-                    action: "weighting",
-                    weight: (data.weight / 100),
-                    weight_diff: weight_diff,
-                    resistance: data.resistance,
-                    previousBodyMetrics: users_datas
+            user_data_model.createUserData(loggined_user_id, weight, resistance).then((result) => {
+                user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
+                    users_datas.push(result);
+    
+                    console.log(users_datas);
+        
+                    let weight_diff = "";
+        
+                    if (users_datas.length > 2) {
+                        let diff = weight - users_datas[users_datas.length - 2].weight;
+                        weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff).toFixed(2) + "kg";
+                    }
+        
+                    websocket_server.sendToAllConnections({
+                        action: "weighting",
+                        weight: (data.weight / 100),
+                        weight_diff: weight_diff,
+                        resistance: data.resistance,
+                        previousBodyMetrics: users_datas
+                    });
                 });
             });
         }
@@ -240,8 +243,7 @@ function display(data) {
 
 
     } else {
-        process.stdout.cursorTo(0);
-        process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
+        console.log("Производится взвешивание: " + (data.weight / 100) + "кг     ");
         websocket_server.sendToAllConnections({action: "weighting", weight: (data.weight / 100)});
         isResultsGot = false;
     }
