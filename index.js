@@ -231,8 +231,7 @@ function display(data) {
 
 
     } else {
-        process.stdout.cursorTo(0);
-        process.stdout.write("Производится взвешивание: " + (data.weight / 100) + "кг     ");
+        console.log("Производится взвешивание: " + (data.weight / 100) + "кг     ");
         websocket_server.sendToAllConnections({action: "weighting", weight: (data.weight / 100)});
         isResultsGot = false;
     }
