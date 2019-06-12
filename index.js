@@ -16,6 +16,8 @@ var isResultsGot = false;
 var user_data_model = require('./lib/server/models/user_data');
 var user_model = require('./lib/server/models/user');
 var user_photo_model = require('./lib/server/models/user_photo');
+var activity_types = require('./lib/server/models/activity_type');
+var training_goals_types = require('./lib/server/models/training_goals_type');
 
 //Вебсокет-сервер
 var websocket_server = require('./lib/server/websocket_server');
@@ -23,12 +25,19 @@ websocket_server.create_server();
 
 //Тестирование методов
 //user_data_model.getLastWeight(1);
-//user_model.createUser("Дмитрий2", "1996-07-16", "179", true, "89242336096");
+//user_model.createorupdateUser("Дмитрий1", "1996-07-16", "179", true, "89242336096", 5, function () {});
 //user_model.updateUser("Дми", "1996-07-16", "179", true, "79242336096");
-//user_model.getUser(1);
+//user_model.getUserByPhone("9242336096", function (result) {console.log(JSON.stringify(result, null, 4));});
+//activity_types.getType(5, function (result) {console.log(JSON.stringify(result, null, 4));});
+//activity_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
+//training_goals_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
+//training_goals_types.getType(1, function (result) {console.log(JSON.stringify(result, null, 4));});
 //user_data_model.getAllUserDatas(1);
 //user_data_model.createUserData(1, 70, 700);
 //user_photo_model.createUserPhoto(1, "test");
+//user_data_model.addUniqueUserCount(3).then(result => {console.log(result);});
+
+//user_model.updateTrainingGoal('9242336095', 1).then(result => {console.log(result);});
 //user_photo_model.getUserPhoto(1, 1, function (photo) {console.log(JSON.stringify(photo));});
 
 noble.on('stateChange', function (state) {
@@ -192,23 +201,26 @@ function display(data) {
         let loggined_user_id = auth.get_logined_user_id();
 
         if (loggined_user_id) {
-            user_data_model.createUserData(loggined_user_id, weight, resistance);
-            user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
-                console.log(users_datas);
-
-                let weight_diff = "";
-
-                if (users_datas.length > 2) {
-                    let diff = weight - users_datas[users_datas.length - 2].weight;
-                    weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff).toFixed(2) + "kg";
-                }
-
-                websocket_server.sendToAllConnections({
-                    action: "weighting",
-                    weight: (data.weight / 100),
-                    weight_diff: weight_diff,
-                    resistance: data.resistance,
-                    previousBodyMetrics: users_datas
+            user_data_model.createUserData(loggined_user_id, weight, resistance).then((result) => {
+                user_data_model.getAllUserDatas(loggined_user_id, users_datas => {
+                    users_datas.push(result);
+    
+                    console.log(users_datas);
+        
+                    let weight_diff = "";
+        
+                    if (users_datas.length > 2) {
+                        let diff = weight - users_datas[users_datas.length - 2].weight;
+                        weight_diff = (diff > 0 ? "+" : "-") + Math.abs(diff).toFixed(2) + "kg";
+                    }
+        
+                    websocket_server.sendToAllConnections({
+                        action: "weighting",
+                        weight: (data.weight / 100),
+                        weight_diff: weight_diff,
+                        resistance: data.resistance,
+                        previousBodyMetrics: users_datas
+                    });
                 });
             });
         }
