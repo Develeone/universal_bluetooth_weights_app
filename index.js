@@ -23,27 +23,23 @@ var training_goals_types = require('./lib/server/models/training_goals_type');
 var websocket_server = require('./lib/server/websocket_server');
 websocket_server.create_server();
 
-//Тестирование методов
-//user_data_model.getLastWeight(1);
-//user_model.createorupdateUser("Дмитрий1", "1996-07-16", "179", true, "89242336096", 5, function () {});
-//user_model.updateUser("Дми", "1996-07-16", "179", true, "79242336096");
-//user_model.getUserByPhone("9242336096", function (result) {console.log(JSON.stringify(result, null, 4));});
-//activity_types.getType(5, function (result) {console.log(JSON.stringify(result, null, 4));});
-//activity_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
-//training_goals_types.getAllTypes(function (result) {console.log(JSON.stringify(result, null, 4));});
-//training_goals_types.getType(1, function (result) {console.log(JSON.stringify(result, null, 4));});
-//user_data_model.getAllUserDatas(1);
-//user_data_model.createUserData(1, 70, 700);
-//user_photo_model.createUserPhoto(1, "test");
-//user_data_model.addUniqueUserCount(3).then(result => {console.log(result);});
+var is_connected = false;
 
-//user_model.updateTrainingGoal('9242336095', 1).then(result => {console.log(result);});
-//user_photo_model.getUserPhoto(1, 1, function (photo) {console.log(JSON.stringify(photo));});
+function startScanning() {
+	noble.startScanning();
+	setTimeout(function () {
+        noble.stopScanning();
+        if (!is_connected)
+            setTimeout(function () {
+                startScanning();
+			}, 3000);
+	}, 10000);
+}
 
 noble.on('stateChange', function (state) {
     if (debug)
         console.log('Bluetooth', state);
-    noble.startScanning();
+	startScanning();
 });
 
 noble.on('discover', function (peripheral) {
@@ -67,6 +63,9 @@ function Connect (device) {
         if (debug)
             console.log("Error: ", error);
 
+        if (error == null)
+			is_connected = true;
+
         discoverServices(device)
         .then(function (services) {
             if (services.length > 0)
@@ -82,7 +81,7 @@ function Connect (device) {
                                     if (debug)
                                         console.log(data);
 
-                                    handleWeighting(data);
+                                    //handleWeighting(data);
 
                                     return;
 
@@ -109,6 +108,11 @@ function Connect (device) {
                 throw new Error('Service not found')
         });
     });
+
+	device.once('disconnect', function () {
+	    is_connected = false;
+		startScanning();
+	});
 }
 //);
 
