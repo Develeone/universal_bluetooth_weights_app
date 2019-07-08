@@ -1,4 +1,4 @@
-var debug = true;
+﻿var debug = true;
 
 if (debug)
     console.log("Start");
@@ -9,7 +9,7 @@ var bodymetrics = require('./lib/bodymetrics');
 
 var auth = require('./lib/server/auth_controller');
 
-var target_controller_name = 'YUNMAI-ISM2-W';//'YUNMAI-SIGNAL-M1US';//'LeFu Scale';//
+var target_controller_name = 'YUNMAI-SIGNAL-M1US';//'YUNMAI-ISM2-W';//'LeFu Scale';//
 var isResultsGot = false;
 
 //Определение моделей
@@ -39,7 +39,9 @@ function startScanning() {
 noble.on('stateChange', function (state) {
     if (debug)
         console.log('Bluetooth', state);
-	startScanning();
+
+    if (state == 'poweredOn')
+        startScanning();
 });
 
 noble.on('discover', function (peripheral) {
