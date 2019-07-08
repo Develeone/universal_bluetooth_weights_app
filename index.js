@@ -1,4 +1,4 @@
-﻿var debug = true;
+var debug = true;
 
 if (debug)
     console.log("Start");
@@ -83,7 +83,7 @@ function Connect (device) {
                                     if (debug)
                                         console.log(data);
 
-                                    //handleWeighting(data);
+                                    handleWeighting(data);
 
                                     return;
 
