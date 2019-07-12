@@ -1,4 +1,6 @@
-﻿var debug = true;
+﻿try
+{
+var debug = true;
 
 if (debug)
     console.log("Start");
@@ -83,7 +85,7 @@ function Connect (device) {
                                     if (debug)
                                         console.log(data);
 
-                                    //handleWeighting(data);
+                                    handleWeighting(data);
 
                                     return;
 
@@ -253,4 +255,8 @@ function display(data) {
         websocket_server.sendToAllConnections({action: "weighting", weight: (data.weight / 100)});
         isResultsGot = false;
     }
+}
+
+} catch (e) {
+	console.log(e);
 }
