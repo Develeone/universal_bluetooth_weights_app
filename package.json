@@ -15,7 +15,7 @@
     "pg": "^7.11.0",
     "postgresql": "0.0.1",
     "request": "^2.88.0",
-    "sequelize": "^5.8.7",
+    "sequelize": "^5.15.1",
     "sequelize-cli": "^5.4.0",
     "sqlite3": "^4.0.6",
     "websocket": "^1.0.25"
